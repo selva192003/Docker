@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "selva192003/docker-app:latest"  // Change this to your registry
         CONTAINER_NAME = "docker-running-app"
-        REGISTRY_CREDENTIALS = "docker_ID"  // Jenkins credentials ID
+        REGISTRY_CREDENTIALS = "docker_hub_credentials"  // Jenkins credentials ID
     }
 
     stages {
