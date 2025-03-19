@@ -1,17 +1,16 @@
 pipeline {
     agent any
-
     environment {
-        DOCKER_IMAGE = "selva192003/docker-app:latest" /* Change this to your registry */
+        DOCKER_IMAGE = "selva192003/docker-app:latest"  // Change this to your registry
         CONTAINER_NAME = "docker-running-app"
-        REGISTRY_CREDENTIALS = "docker-hub-credentials" /* Jenkins credentials ID */
+        REGISTRY_CREDENTIALS = "docker_ID"  // Jenkins credentials ID
     }
 
     stages {
         stage('Checkout Code') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'selva192003', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
-                    git url: "https://$GIT_USER:$GIT_TOKEN@github.com/selva192003/Docker.git", branch: 'main'
+                    git url: "https://$GIT_USER:$GIT_TOKEN@github.com/PadmavathyNarayanan/Docker.git", branch: 'main'
                 }
             }
         }
@@ -25,12 +24,7 @@ pipeline {
         stage('Login to Docker Registry') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker_ID', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    script {
-                        sh '''
-                        set -x
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        '''
-                    }
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                 }
             }
         }
@@ -63,11 +57,10 @@ pipeline {
 
     post {
         success {
-            echo "✅ Build, push, and container execution successful!"
+            echo "Build, push, and container execution successful!"
         }
         failure {
-            echo "❌ Build or container execution failed."
+            echo "Build or container execution failed."
         }
     }
 }
-
