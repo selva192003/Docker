@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'github-selva192003', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
-                    git url: "https://$GIT_USER:$GIT_TOKEN@github.com/selva192003/jenkins-docker-demo.git", branch: 'main'
+                    git url: "https://$GIT_USER:$GIT_TOKEN@github.com/selva192003/Docker.git", branch: 'main'
                 }
             }
         }
