@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'selva192003', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
+                withCredentials([usernamePassword(credentialsId: 'git_selva', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
                     git url: "https://$GIT_USER:$GIT_TOKEN@github.com/PadmavathyNarayanan/Docker.git", branch: 'main'
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Login to Docker Registry') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker_ID', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker_hub_credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                 }
             }
